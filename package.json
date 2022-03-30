@@ -1,6 +1,6 @@
 {
   "name": "recoil-persistent",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A very simple library for persisting recoil state.",
   "license": "MIT",
   "main": "./dist/main.js",

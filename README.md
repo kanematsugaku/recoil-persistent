@@ -43,3 +43,17 @@ export default function App() {
 ## Example
 
 ![example image](readme.gif)
+
+## Option
+
+By default, recoil-persistent use `window.sessionStorage` where to store persistent data.
+
+If you want to use `window.localStorage`, pass it to argument.
+
+```tsx
+const counterAtom = atom<CounterAtom>({
+  key: 'counterAtom',
+  default: 0,
+  effects_UNSTABLE: [recoilPersistent({ storage: window.localStorage })], // 👈
+});
+```
