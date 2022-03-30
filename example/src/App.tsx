@@ -1,27 +1,12 @@
-# `recoil-persistent`
-
-A very simple library for persisting recoil state.
-
-## Installation
-
-```sh
-npm install recoil-persistent
-```
-
-## Usage
-
-Pass `recoilPersistent()` to the Recoil's `effects_UNSTABLE` param. That's it!
-
-```tsx
 import { atom, useRecoilState, useResetRecoilState } from 'recoil';
-import recoilPersistent from 'recoil-persistent';
+import recoilPersistent from './lib/main';
 
 type CounterAtom = number;
 
 const counterAtom = atom<CounterAtom>({
   key: 'counterAtom',
   default: 0,
-  effects_UNSTABLE: [recoilPersistent()], // 👈 All you need to do is just add this line.
+  effects_UNSTABLE: [recoilPersistent()],
 });
 
 export default function App() {
@@ -29,7 +14,7 @@ export default function App() {
   const resetCount = useResetRecoilState(counterAtom);
 
   return (
-    <div>
+    <div style={{ padding: '32px' }}>
       <p>Counter: {count}</p>
       <button onClick={() => setCount((prev) => prev + 1)}> +1 </button>
       <button onClick={() => setCount((prev) => prev - 1)}> -1 </button>
@@ -38,4 +23,3 @@ export default function App() {
     </div>
   );
 }
-```

@@ -1,7 +1,7 @@
 {
   "name": "recoil-persistent",
-  "version": "0.0.1",
-  "description": "A very simple library for persisting recoil.",
+  "version": "0.0.2",
+  "description": "A very simple library for persisting recoil state.",
   "license": "MIT",
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
@@ -20,25 +20,25 @@
     "persistence"
   ],
   "peerDependencies": {
-    "recoil": "^0.6.0"
+    "recoil": "^0.6.1"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
     "@types/eslint": "^8.4.1",
     "@types/prettier": "^2.4.4",
-    "@types/react": "^17.0.39",
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.12.1",
-    "eslint": "^8.9.0",
-    "eslint-config-prettier": "^8.4.0",
-    "eslint-plugin-react": "^7.28.0",
+    "@types/react": "^17.0.43",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.5"
+    "prettier": "^2.6.1",
+    "typescript": "^4.6.3"
   },
   "scripts": {
     "build": "tsc",
-    "copy": "cp -r src/* example/src/lib",
+    "copy": "cp -r src/* example/src/lib/",
     "link": "npm run build && npm link && cd example && npm link recoil-persistent",
     "unlink": "cd example && npm unlink recoil-persistent && cd .. && npm unlink recoil-persistent && npm uninstall --g recoil-persistent",
     "prepublishOnly": "npm run build",
