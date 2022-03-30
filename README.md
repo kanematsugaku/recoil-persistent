@@ -39,3 +39,7 @@ export default function App() {
   );
 }
 ```
+
+## Example
+
+![example image](readme.gif)
