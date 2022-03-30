@@ -9,8 +9,9 @@
 import type { AtomEffect } from 'recoil';
 
 export type Storage = {
-  setItem(key: string, value: string): void | Promise<void>;
-  getItem(key: string): null | string | Promise<string>;
+  setItem(key: string, value: string): void;
+  getItem(key: string): null | string;
+  removeItem(key: string): void;
 };
 
 export type Config = {
@@ -23,32 +24,18 @@ export type PersistAtomEffect = AtomEffect<any>;
 /**
  * Recoil module to persist state to storage.
  *
- * @param config Optional configuration object.
- * @param config.storage Where to store persistent data. default is "sessionStorage".
+ * @param storage Where to store persistent data. default is "sessionStorage".
  * @return Atom Effects to set to "effects_UNSTABLE" param.
  */
-export default function recoilPersistent(config: Config = {}): PersistAtomEffect {
+export default function recoilPersistent(
+  storage: Storage = window.sessionStorage,
+): PersistAtomEffect {
   if (typeof window === 'undefined') {
     const persistAtomEffectFallback: PersistAtomEffect = () => {
       // Empty.
     };
     return persistAtomEffectFallback;
   }
-
-  const { storage = window.sessionStorage } = config;
-
-  const persistAtomEffect: PersistAtomEffect = ({ onSet, node, trigger, setSelf }) => {
-    if (trigger === 'get') {
-      const state = getFromStorage(node.key);
-      if (Object.hasOwn(state, node.key)) {
-        setSelf(state[node.key]);
-      }
-    }
-    onSet((newValue, _, isReset) => {
-      const state = getFromStorage(node.key);
-      updateStateInStorage(newValue, state, node.key, isReset);
-    });
-  };
 
   const isRecord = (arg: unknown): arg is Record<string, unknown> => {
     return arg !== null && typeof arg === 'object';
@@ -58,13 +45,14 @@ export default function recoilPersistent(config: Config = {}): PersistAtomEffect
     try {
       return JSON.parse(state);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       return {};
     }
   };
 
-  const getFromStorage = (key: string): Record<string, unknown> => {
-    const persistedState = storage.getItem(key);
+  const getFromStorage = (storage_: Storage, key: string): Record<string, unknown> => {
+    const persistedState = storage_.getItem(key);
     if (typeof persistedState === 'string') {
       const parsedState = parseFromJson(persistedState);
       if (isRecord(parsedState)) {
@@ -74,24 +62,28 @@ export default function recoilPersistent(config: Config = {}): PersistAtomEffect
     return {};
   };
 
-  const updateStateInStorage = (
-    newValue: unknown,
-    state: unknown,
-    key: string,
-    isReset: boolean,
-  ): void => {
-    if (isRecord(state)) {
-      if (isReset) {
-        delete state[key];
-      } else {
-        state[key] = newValue;
-      }
-    }
-    setToStorage(key, state);
+  const setToStorage = (storage_: Storage, key: string, newValue: unknown): void => {
+    storage_.setItem(key, JSON.stringify({ [key]: newValue }));
   };
 
-  const setToStorage = (key: string, state: unknown): void => {
-    storage.setItem(key, JSON.stringify(state))?.catch(console.error);
+  const removeFromStorage = (storage_: Storage, key: string): void => {
+    storage_.removeItem(key);
+  };
+
+  const persistAtomEffect: PersistAtomEffect = ({ onSet, node, trigger, setSelf }) => {
+    if (trigger === 'get') {
+      const state = getFromStorage(storage, node.key);
+      if (Object.hasOwn(state, node.key)) {
+        setSelf(state[node.key]);
+      }
+    }
+    onSet((newValue, _, isReset) => {
+      if (isReset) {
+        removeFromStorage(storage, node.key);
+      } else {
+        setToStorage(storage, node.key, newValue);
+      }
+    });
   };
 
   return persistAtomEffect;
