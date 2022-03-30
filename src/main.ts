@@ -25,7 +25,7 @@ export type PersistAtomEffect = AtomEffect<any>;
  * Recoil module to persist state to storage.
  *
  * @param storage Where to store persistent data. default is "sessionStorage".
- * @return Atom Effects to set to "effects_UNSTABLE" param.
+ * @return Atom Effects to set to "effects" param.
  */
 export default function recoilPersistent(
   storage: Storage = window.sessionStorage,

@@ -11,13 +11,13 @@ type UserAtom = {
 const counterAtom = atom<CounterAtom>({
   key: 'counterAtom',
   default: 0,
-  effects_UNSTABLE: [recoilPersistent()],
+  effects: [recoilPersistent()],
 });
 
 const userAtom = atom<UserAtom>({
   key: 'userAtom',
   default: { name: '', age: undefined },
-  effects_UNSTABLE: [recoilPersistent()],
+  effects: [recoilPersistent()],
 });
 
 export default function App() {

@@ -10,7 +10,7 @@ npm install recoil-persistent
 
 ## Usage
 
-Pass `recoilPersistent()` to the Recoil's `effects_UNSTABLE` param. That's it!
+Pass `recoilPersistent()` to the Recoil's `effects` param. That's it!
 
 ```tsx
 import { atom, useRecoilState, useResetRecoilState } from 'recoil';
@@ -21,7 +21,7 @@ type CounterAtom = number;
 const counterAtom = atom<CounterAtom>({
   key: 'counterAtom',
   default: 0,
-  effects_UNSTABLE: [recoilPersistent()], // 👈 All you need to do is just add this line.
+  effects: [recoilPersistent()], // 👈 All you need to do is just add this line.
 });
 
 export default function App() {
@@ -54,6 +54,6 @@ If you want to use `window.localStorage`, pass it to argument.
 const counterAtom = atom<CounterAtom>({
   key: 'counterAtom',
   default: 0,
-  effects_UNSTABLE: [recoilPersistent(window.localStorage)],
+  effects: [recoilPersistent(window.localStorage)],
 });
 ```
