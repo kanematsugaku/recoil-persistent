@@ -29,15 +29,15 @@ export type PersistAtomEffect = AtomEffect<any>;
  */
 export default function recoilPersistent(config: Config = {}): PersistAtomEffect {
   if (typeof window === 'undefined') {
-    const persistAtomFallback: PersistAtomEffect = () => {
+    const persistAtomEffectFallback: PersistAtomEffect = () => {
       // Empty.
     };
-    return persistAtomFallback;
+    return persistAtomEffectFallback;
   }
 
   const { storage = window.sessionStorage } = config;
 
-  const persistAtom: PersistAtomEffect = ({ onSet, node, trigger, setSelf }) => {
+  const persistAtomEffect: PersistAtomEffect = ({ onSet, node, trigger, setSelf }) => {
     if (trigger === 'get') {
       const state = getFromStorage(node.key);
       if (Object.hasOwn(state, node.key)) {
@@ -94,5 +94,5 @@ export default function recoilPersistent(config: Config = {}): PersistAtomEffect
     storage.setItem(key, JSON.stringify(state))?.catch(console.error);
   };
 
-  return persistAtom;
+  return persistAtomEffect;
 }
