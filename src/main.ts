@@ -9,13 +9,9 @@
 import type { AtomEffect } from 'recoil';
 
 export type Storage = {
-  setItem(key: string, value: string): void;
   getItem(key: string): null | string;
+  setItem(key: string, value: string): void;
   removeItem(key: string): void;
-};
-
-export type Config = {
-  storage?: Storage;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,12 +20,10 @@ export type PersistAtomEffect = AtomEffect<any>;
 /**
  * Recoil module to persist state to storage.
  *
- * @param storage Where to store persistent data. default is "sessionStorage".
+ * @param optionalStorage Where to store persistent data. default is "sessionStorage".
  * @return Atom Effects to set to "effects" param.
  */
-export default function recoilPersistent(
-  storage: Storage = window.sessionStorage,
-): PersistAtomEffect {
+export default function recoilPersistent(optionalStorage?: Storage): PersistAtomEffect {
   if (typeof window === 'undefined') {
     const persistAtomEffectFallback: PersistAtomEffect = () => {
       // Empty.
@@ -51,8 +45,8 @@ export default function recoilPersistent(
     }
   };
 
-  const getFromStorage = (storage_: Storage, key: string): Record<string, unknown> => {
-    const persistedState = storage_.getItem(key);
+  const getFromStorage = (storage: Storage, key: string): Record<string, unknown> => {
+    const persistedState = storage.getItem(key);
     if (typeof persistedState === 'string') {
       const parsedState = parseFromJson(persistedState);
       if (isRecord(parsedState)) {
@@ -62,15 +56,16 @@ export default function recoilPersistent(
     return {};
   };
 
-  const setToStorage = (storage_: Storage, key: string, newValue: unknown): void => {
-    storage_.setItem(key, JSON.stringify({ [key]: newValue }));
+  const setToStorage = (storage: Storage, key: string, newValue: unknown): void => {
+    storage.setItem(key, JSON.stringify({ [key]: newValue }));
   };
 
-  const removeFromStorage = (storage_: Storage, key: string): void => {
-    storage_.removeItem(key);
+  const removeFromStorage = (storage: Storage, key: string): void => {
+    storage.removeItem(key);
   };
 
   const persistAtomEffect: PersistAtomEffect = ({ onSet, node, trigger, setSelf }) => {
+    const storage = optionalStorage ?? window.sessionStorage;
     if (trigger === 'get') {
       const state = getFromStorage(storage, node.key);
       if (Object.hasOwn(state, node.key)) {
