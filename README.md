@@ -54,6 +54,6 @@ If you want to use `window.localStorage`, pass it to argument.
 const counterAtom = atom<CounterAtom>({
   key: 'counterAtom',
   default: 0,
-  effects_UNSTABLE: [recoilPersistent({ storage: window.localStorage })], // 👈
+  effects_UNSTABLE: [recoilPersistent({ storage: window.localStorage })],
 });
 ```
