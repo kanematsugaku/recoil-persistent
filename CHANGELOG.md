@@ -1,3 +1,7 @@
+## 0.0.6 (March 30, 2022)
+
+- Fix README.
+
 ## 0.0.5 (March 30, 2022)
 
 - Chore.

@@ -42,7 +42,7 @@ export default function App() {
 
 ## Example
 
-![example image](readme.gif)
+![example image](https://raw.githubusercontent.com/kanematsugaku/recoil-persistent/main/readme.gif)
 
 ## Option
 
