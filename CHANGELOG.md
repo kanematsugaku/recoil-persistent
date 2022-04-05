@@ -1,3 +1,7 @@
+## 0.0.10 (April 5, 2022)
+
+- Update recoil version to 0.7.0.
+
 ## 0.0.9 (March 30, 2022)
 
 - Fix bug.

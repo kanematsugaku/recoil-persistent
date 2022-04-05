@@ -1,6 +1,6 @@
 {
   "name": "recoil-persistent",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A very simple library for persisting recoil state.",
   "license": "MIT",
   "main": "./dist/main.js",
@@ -20,20 +20,20 @@
     "persistence"
   ],
   "peerDependencies": {
-    "recoil": "^0.6.1"
+    "recoil": "^0.7.0"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
     "@types/eslint": "^8.4.1",
     "@types/prettier": "^2.4.4",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
     "eslint": "^8.12.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^16.1.4",
+    "eslint-config-airbnb-typescript": "^16.2.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.4",
-    "prettier": "^2.6.1",
+    "prettier": "^2.6.2",
     "typescript": "^4.6.3"
   },
   "scripts": {
